@@ -1,127 +1,148 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 using namespace std;
 
-int main () 
-{	
-	
-	int id,e;
-	string str1, str2, line,name, path;
-	char option;
-	bool b;
-	
-	cout << "What do you want to display?" << '\n';
-	cout << "a)patterns by number" << '\n';
-	cout << "b)patterns by name" << '\n';
-	cout << "c)patterns by path" << '\n';
-	cout << "d)called patterns" << '\n';
-	cout << "e)non called patterns" << '\n';
-	
-	cin >> option;
-	
-	ifstream myfile ("entry.txt");
-	
-	if (myfile.is_open())
-	{
-	while( !myfile.eof() ){
-	
-		while (myfile >> id >> str1 >> str2 >> b )
-		{
-			
-			if(option=='a')
-			{
-			
-				cout << "insert number:" << '\n';
-				cin >> e;
-				
-				if(e==id)
-				{
-				
-					cout << id << ' ';
-				    cout << str1 << ' ';
-				    cout << str2 << ' ';
-				    cout << b << '\n';
-				
-				}
 
-				
-			}
+struct tupl {
+int id;
+string str1, str2;
+bool call;
+
+} tup;
+
+
+int main(){
+	
+	int i,number,size;
+	string name, path;
+	char option;	
+	vector<tupl> set;
+	bool call, terminator;
+	
+	i=0;
+	
 		
-			if(option=='b')
-			{
-			
-				cout << "insert name:" << '\n';
-				cin >> name;
-				
-				if(str1==name)
-				{
-				
-					cout << id << ' ';
-				    cout << str1 << ' ';
-				    cout << str2 << ' ';
-				    cout << b << '\n';
-				
-				}
-			
-			}
-			
-			if(option=='c')
-			{
-			
-				cout << "insert path:" << '\n';
-				cin >> path;
-				if(str2==path)
-				{
+	ifstream myfile ("entry.txt");
+		
+	if(myfile.is_open()){	
+			while (myfile >> tup.id >> tup.str1 >> tup.str2 >> tup.call ){
 					
-					cout << id << ' ';
-				    cout << str1 << ' ';
-				    cout << str2 << ' ';
-				    cout << b << '\n';
-				}
-			}
+					cout << tup.id << ' ';
+				    cout << tup.str1 << ' ';
+				    cout << tup.str2 << ' ';
+				    cout << tup.call << '\n';
+
+					set.push_back(tup);
+					i++;		
+			}	
+
+		myfile.close();
+	}
+	
+	else {
+		cout << "Unable to open file";
+	}
+	size=set.size();
+	
+	terminator=false;
+	
+	while(terminator==false){
+		cout << "What do you want to display?" << '\n';
+		cout << "a)patterns by number" << '\n';
+		cout << "b)patterns by name" << '\n';
+		cout << "c)patterns by path" << '\n';
+		cout << "d)called patterns" << '\n';
+		cout << "e)non called patterns" << '\n';
+		cout << "f) Exit" << '\n';
+	
+		cin >> option;
+		
+		if(option=='a'){
 			
-			if(option=='d')
-			{
+			cout << "insert number:" << '\n';
+			cin >> number;
 			
-				if(b==true)
-				{
+			for (i=0;i<size;i++){
 				
-					cout << id << ' ';
-				    cout << str1 << ' ';
-				    cout << str2 << ' ';
-				    cout << b << '\n';
+				if(number==set[i].id){
 					
-				}
-			
-			}
-			
-			
-			if(option=='e')
-			{
-			
-				if(b==false)
-				{
-				
-					cout << id << ' ';
-				    cout << str1 << ' ';
-				    cout << str2 << ' ';
-				    cout << b << '\n';
-					
-				}
-			
+					cout << set[i].id << ' '; 
+					cout << set[i].str1 << ' '; 
+					cout << set[i].str2 << ' ';
+					cout << set[i].call << '\n';
+				}	
 			}
 		}
-	}
-			myfile.close();	
+		
+		if(option=='b'){
 			
+			cout << "insert name:" << '\n';
+			cin >> name;
+			
+			for (i=0;i<size;i++){
+				
+				if(!name.compare(set[i].str1)){
+					
+					cout << set[i].id << ' '; 
+					cout << set[i].str1 << ' '; 
+					cout << set[i].str2 << ' ';
+					cout << set[i].call << '\n';
+				}	
+			}
+		}
 		
-	
+		if(option=='c'){
+			
+			cout << "insert number:" << '\n';
+			cin >> path;
+			
+			for (i=0;i<size;i++){
+				
+				if(!path.compare(set[i].str2)){
+					
+					cout << set[i].id << ' '; 
+					cout << set[i].str1 << ' '; 
+					cout << set[i].str2 << ' ';
+					cout << set[i].call << '\n';
+				}	
+			}
+		}
 		
+		if(option=='d'){
+			
+			for (i=0;i<size;i++){
+				
+				if(set[i].call){
+					
+					cout << set[i].id << ' '; 
+					cout << set[i].str1 << ' '; 
+					cout << set[i].str2 << ' ';
+					cout << set[i].call << '\n';
+				}	
+			}
+		}	
+		if(option=='e'){
+			
+			for (i=0;i<size;i++){
+				
+				if(!set[i].call){
+					
+					cout << set[i].id << ' '; 
+					cout << set[i].str1 << ' '; 
+					cout << set[i].str2 << ' ';
+					cout << set[i].call << '\n';
+				}	
+			}
+		}
+		
+		if(option=='f'){
+			terminator= true;
+		}
+		
+		else 	cout << "option not valid" << '\n';	
 	}
-		
-		else cout << "Unable to open file"; 
-		
+	
 	return 0;
-		
 }
