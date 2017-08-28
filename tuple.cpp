@@ -4,7 +4,7 @@
 #include <vector>
 using namespace std;
 
-
+/* Structure that will hold the pattern call*/
 struct tupl {
 int id;
 string str1, str2;
@@ -23,6 +23,8 @@ int main(){
 	
 	i=0;
 	
+	/*First the data for the file is optained, each line is distrbuted 
+	in the structure tupl and all the lines storaged in a vector "set" */
 		
 	ifstream myfile ("entry.txt");
 		
@@ -44,11 +46,11 @@ int main(){
 	else {
 		cout << "Unable to open file";
 	}
-	size=set.size();
+	size=set.size(); /* number of lines in the text file*/
 	
-	terminator=false;
+	terminator=false; /* Boolean for exiting the program*/
 	
-	while(terminator==false){
+	while(terminator==false){ /* While loop to assure that the program will take an input unless the user wants to exit*/
 		cout << "What do you want to display?" << '\n';
 		cout << "a)patterns by number" << '\n';
 		cout << "b)patterns by name" << '\n';
@@ -75,6 +77,8 @@ int main(){
 				}	
 			}
 		}
+		
+		/* Each if corresponds to the input the user gives*/
 		
 		if(option=='b'){
 			
@@ -137,11 +141,11 @@ int main(){
 			}
 		}
 		
-		if(option=='f'){
+		if(option=='f'){  /*  Exit the program  */
 			terminator= true;
 		}
 		
-		else 	cout << "option not valid" << '\n';	
+		else 	cout << "option not valid" << '\n';	/* Delivers an error message if the input is not valid*/
 	}
 	
 	return 0;
